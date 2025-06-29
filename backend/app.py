@@ -138,7 +138,7 @@ def generate_menu(data):
         prompt = f"""
         Create a menu for a {data['formality']} {data['event_type']} event with {data['guest_count']} guests.
         Cuisine style: {data['cuisine']}
-        Service type: {data['service_type']}
+        Cooking Level: {data['level']}
         
         Provide the menu in this format:
         
@@ -220,7 +220,7 @@ def plan_event():
         print("📝 Received form data:", json.dumps(data, indent=2) if data else "No data")
         
         # Validate required fields
-        required_fields = ['event_type', 'cuisine', 'formality', 'guest_count', 'service_type']
+        required_fields = ['event_type', 'cuisine', 'formality', 'guest_count', 'level']
         if not data:
             return jsonify({
                 "status": "error",
@@ -247,15 +247,15 @@ def plan_event():
             
         # Generate grocery list if self-service
         grocery = None
-        if data.get('service_type') == 'self':
-            grocery = generate_grocery_list(menu, data['guest_count'])
-            print("🛒 GROCERY LIST:", grocery if grocery else "None")
-            
-            if isinstance(grocery, dict) and "error" in grocery:
-                return jsonify({
-                    "status": "error",
-                    "message": f"Grocery list generation failed: {grocery['error']}"
-                }), 500
+        
+        grocery = generate_grocery_list(menu, data['guest_count'])
+        print("🛒 GROCERY LIST:", grocery if grocery else "None")
+        
+        if isinstance(grocery, dict) and "error" in grocery:
+            return jsonify({
+                "status": "error",
+                "message": f"Grocery list generation failed: {grocery['error']}"
+            }), 500
         
         # Prepare success response
         response = {

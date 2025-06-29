@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cuisine: document.getElementById('cuisine').value,
             formality: document.getElementById('formality').value,
             guest_count: parseInt(document.getElementById('guest-count').value),
-            service_type: document.querySelector('input[name="service-type"]:checked').value
+            level: parseInt(document.querySelector('input[name="level"]:checked').value)
         };
         
         try {

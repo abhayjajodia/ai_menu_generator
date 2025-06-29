@@ -3,42 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSeek Event Planner</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Menu Planner</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-section, .grocery-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        #error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>DeepSeek Event Planner</h1>
-            <p>Get personalized menu suggestions and grocery lists powered by AI</p>
-            <div class="ai-provider">
-                With intense API
-            </div>
-        </header>
+        <h1>Menu Planner</h1>
+        <div id="error-message"></div>
         
-        <div class="chat-container">
-            <div class="chat-messages" id="chat-messages">
-                <div class="message bot-message">
-                    Hello! I'll help you plan your event menu using AI. Let's start...
+        <form id="plan-form">
+            <div class="form-group">
+                <label for="event-type">Event Type</label>
+                <select id="event-type" required>
+                    <option value="">Select an event</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="brunch">Brunch</option>
+                    <option value="party">Party</option>
+                    <option value="bbq">BBQ</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="cuisine">Cuisine Style</label>
+                <select id="cuisine" required>
+                    <option value="">Select cuisine</option>
+                    <option value="italian">Italian</option>
+                    <option value="mexican">Mexican</option>
+                    <option value="asian">Asian</option>
+                    <option value="mediterranean">Mediterranean</option>
+                    <option value="american">American</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="formality">Formality Level</label>
+                <select id="formality" required>
+                    <option value="">Select formality</option>
+                    <option value="casual">Casual</option>
+                    <option value="semi-formal">Semi-Formal</option>
+                    <option value="formal">Formal</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="guest-count">Number of Guests</label>
+                <input type="number" id="guest-count" min="1" max="100" value="4" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Service Type</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="service-type" value="self" checked>
+                        Self-Catering
+                    </label>
+                    <label>
+                        <input type="radio" name="service-type" value="catered">
+                        Professional Catering
+                    </label>
                 </div>
             </div>
             
-            <div class="input-area">
-                <div id="form-container" style="width: 100%">
-                    <!-- Form steps will be injected here -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="results" id="results">
-            <!-- Results will be displayed here -->
-        </div>
-        
-        <footer>
-            <p>Free event planning assistant</p>
-        </footer>
+            <button type="submit">Generate Menu Plan</button>
+        </form>
     </div>
-
-    <script src="{{ url_for('static', filename='js/script2.js') }}"></script>
+    
+    <div id="results"></div>
+    
+    <script src="/static/js/script.js"></script>
 </body>
 </html>

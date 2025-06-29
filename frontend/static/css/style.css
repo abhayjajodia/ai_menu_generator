@@ -243,3 +243,19 @@ footer {
     margin-top: 0;
     color: #d32f2f;
 }
+
+.error {
+    background-color: #ffdddd;
+    border-left: 4px solid #f44336;
+    padding: 12px;
+    margin: 10px 0;
+    display: none;
+}
+
+.warning {
+    background-color: #fff8dd;
+    border-left: 4px solid #ffc107;
+    padding: 12px;
+    margin: 10px 0;
+    display: none;
+}
